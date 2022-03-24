@@ -2,31 +2,31 @@ package students.items;
 
 abstract class Item {
 	private String name;
-	private double age = 0;
-	private double maturationAge;
-	private double deathAge;
-	private double monetaryValue;
-	private double cost;
-	private String represent = "";
+	protected double age = 0;
+	protected double maturationAge;
+	protected double deathAge;
+	protected double monetaryValue;
+	protected double cost;
+	protected String represent;
 	
-	public Item(double maturationAge, double deathAge, double monetaryValue, double cost) {		
-		this.setMaturationAge(maturationAge);
-		this.setDeathAge(deathAge);
-		this.setMonetaryValue(monetaryValue);
-		this.setRepresent(represent);
-		this.setAge(age);
+	Item(double maturationAge, double deathAge, double monetaryValue, double cost) {		
+		this.maturationAge = maturationAge;
+		this.deathAge = deathAge;
+		this.monetaryValue = monetaryValue;
+		this.cost = cost;
+		
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
-
-	public void setName(String name) {
+	
+	protected void setName(String name) {
 		this.name = name;
 	}
 
 	public double getAge() {
-		return age;
+		return this.age;
 	}
 
 	public void setAge(double age) {
@@ -34,48 +34,33 @@ abstract class Item {
 	}
 
 	public double getMaturationAge() {
-		return maturationAge;
-	}
-
-	public void setMaturationAge(double maturationAge) {
-		this.maturationAge = maturationAge;
+		return this.maturationAge;
 	}
 
 	public double getDeathAge() {
-		return deathAge;
-	}
-
-	public void setDeathAge(double deathAge) {
-		this.deathAge = deathAge;
+		return this.deathAge;
 	}
 
 	public double getValue() {
 		if (this.age > this.maturationAge) {
-			return monetaryValue;
+			return this.monetaryValue;
 		}
 		return 0;
 	}
 
-	public void setMonetaryValue(double monetaryValue) {
-		this.monetaryValue = monetaryValue;
-	}
-
 	public double getCost() {
-		return cost;
+		return this.cost;
 	}
 
-	public void setCost(double cost) {
-		this.cost = cost;
+	public String getRepresent(String represent) {
+		if (this.age < this.maturationAge) {
+			this.represent = represent;
+		} else {
+			this.represent = represent.toUpperCase();
+		}
+		return this.represent;
 	}
 
-	public String getRepresent() {
-		return represent;
-	}
-
-	public void setRepresent(String represent) {
-		this.represent = represent;
-	}
-	
 	public void tick() {
 		this.age ++;
 	}
@@ -93,12 +78,17 @@ abstract class Item {
 		}
 		
 		if (!(object instanceof Item)) {
+			System.out.println("not an instance of Item");
 			return false;
 		}
 		
 		Item compareItem = (Item) object; 
 		
-		return this.getAge() == compareItem.getAge() && this.getDeathAge() == compareItem.getDeathAge() && this.getMaturationAge() == compareItem.getMaturationAge() && this.getValue() == compareItem.getValue();
+		System.out.println("Inside equals!");
+		return this.getAge() == compareItem.getAge() 
+				&& this.getDeathAge() == compareItem.getDeathAge() 
+				&& this.getMaturationAge() == compareItem.getMaturationAge() 
+				&& this.getValue() == compareItem.getValue();
 	}
 	
 	
@@ -107,12 +97,22 @@ abstract class Item {
 	};
 	
 	public static void main(String[] args) {
-		Apples corn = new Apples(5, 10, 3, 2);
-		Apples tomato = new Apples();
+		Apples corn = new Apples();
+		Apples corn1 = new Apples();
+		Apples corn2 = new Apples();
+		Apples corn3 = new Apples();
+		Apples corn4 = new Apples();
 		
+		System.out.println("Compare Corn and Corn1 " + corn.equals(corn1));
+		System.out.println("Corn name: " + corn.getName());
 		System.out.println("Corn age: " + corn.getAge());
-		System.out.println("Compare Tomato and Corn " + corn.equals(tomato));
-		System.out.println("Compare Corn and Corn " + corn.equals(corn));
+		System.out.println("Corn represent: " + corn.getRepresent());
+		corn.setAge(3);
+		System.out.println("Corn age: " + corn.getAge());
+		System.out.println("Corn Maturation age: " + corn.getMaturationAge());
+		System.out.println("Corn represent: " + corn.getRepresent());
+		System.out.println("Corn gen count: " + corn.getGenerationCount());
+		
 	}
 	
 	
