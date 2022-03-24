@@ -9,11 +9,10 @@ abstract class Item {
 	protected double cost;
 	protected String represent;
 	
-	Item(double maturationAge, double deathAge, double monetaryValue, double cost) {		
+	Item(double maturationAge, double deathAge, double monetaryValue) {		
 		this.maturationAge = maturationAge;
 		this.deathAge = deathAge;
 		this.monetaryValue = monetaryValue;
-		this.cost = cost;
 		
 	}
 
@@ -53,11 +52,17 @@ abstract class Item {
 	}
 
 	public String getRepresent(String represent) {
-		if (this.age < this.maturationAge) {
-			this.represent = represent;
-		} else {
-			this.represent = represent.toUpperCase();
+		try {
+			if (this.age < this.maturationAge) {
+				this.represent = represent;
+			} else {
+				this.represent = represent.toUpperCase();
+			}
 		}
+		catch(Exception e) {
+			this.represent = represent;
+		}
+		
 		return this.represent;
 	}
 
@@ -102,8 +107,14 @@ abstract class Item {
 		Apples corn2 = new Apples();
 		Apples corn3 = new Apples();
 		Apples corn4 = new Apples();
+		Weed w = new Weed();
+		Weed w1 = new Weed();
+		Weed w2 = new Weed();
+		//Food f = new Food();
 		
 		System.out.println("Compare Corn and Corn1 " + corn.equals(corn1));
+		System.out.println("Compare Corn and Weed " + corn.equals(w));
+		System.out.println("Compare Weed and Weed 1 " + w.equals(w1));
 		System.out.println("Corn name: " + corn.getName());
 		System.out.println("Corn age: " + corn.getAge());
 		System.out.println("Corn represent: " + corn.getRepresent());
@@ -112,7 +123,8 @@ abstract class Item {
 		System.out.println("Corn Maturation age: " + corn.getMaturationAge());
 		System.out.println("Corn represent: " + corn.getRepresent());
 		System.out.println("Corn gen count: " + corn.getGenerationCount());
-		
+		System.out.println("Weed represent: " + w.getRepresent());
+		System.out.println("Weed m_age: " + w.getMaturationAge());
 	}
 	
 	

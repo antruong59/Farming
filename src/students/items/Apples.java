@@ -12,6 +12,7 @@ public class Apples extends Food {
 	public String getRepresent() {
 		return this.getRepresent("a");
 	}
+	
 	public int getGenerationCount() {
 		return counter;
 	}

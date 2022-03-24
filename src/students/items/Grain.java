@@ -12,6 +12,7 @@ public class Grain extends Food {
 	public String getRepresent() {
 		return this.getRepresent("g");
 	}
+	
 	public int getGenerationCount() {
 		return counter;
 	}
