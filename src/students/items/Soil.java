@@ -2,13 +2,15 @@ package students.items;
 
 public class Soil extends Item
 {
-	Soil() {
+	public Soil() {
 		super(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 0);
 		this.setName("Soil");
+		this.represent = ".";
 	}
 	
-	public String getRepresent() {
-		return this.getRepresent(".");
+	@Override
+	public String toString() {
+		return this.represent;
 	}
 
 }

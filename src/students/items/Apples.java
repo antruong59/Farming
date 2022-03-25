@@ -9,11 +9,17 @@ public class Apples extends Food {
 
 	}
 	
-	public String getRepresent() {
-		return this.getRepresent("a");
+	@Override
+	public String toString() {
+		if (this.age < this.maturationAge) {
+			this.represent = "a";
+		} else {
+			this.represent = "A";
+		}
+		return this.represent;
 	}
 	
-	public int getGenerationCount() {
+	public static int getGenerationCount() {
 		return counter;
 	}
 	

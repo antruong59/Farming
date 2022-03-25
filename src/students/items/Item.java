@@ -1,6 +1,6 @@
 package students.items;
 
-abstract class Item {
+public abstract class Item {
 	private String name;
 	protected double age = 0;
 	protected double maturationAge;
@@ -9,7 +9,7 @@ abstract class Item {
 	protected double cost;
 	protected String represent;
 	
-	Item(double maturationAge, double deathAge, double monetaryValue) {		
+	public Item(double maturationAge, double deathAge, double monetaryValue) {		
 		this.maturationAge = maturationAge;
 		this.deathAge = deathAge;
 		this.monetaryValue = monetaryValue;
@@ -40,30 +40,15 @@ abstract class Item {
 		return this.deathAge;
 	}
 
-	public double getValue() {
+	public int getValue() {
 		if (this.age > this.maturationAge) {
-			return this.monetaryValue;
+			return (int) this.monetaryValue;
 		}
 		return 0;
 	}
 
 	public double getCost() {
 		return this.cost;
-	}
-
-	public String getRepresent(String represent) {
-		try {
-			if (this.age < this.maturationAge) {
-				this.represent = represent;
-			} else {
-				this.represent = represent.toUpperCase();
-			}
-		}
-		catch(Exception e) {
-			this.represent = represent;
-		}
-		
-		return this.represent;
 	}
 
 	public void tick() {
@@ -97,9 +82,7 @@ abstract class Item {
 	}
 	
 	
-	public String toString() {
-		return "";
-	};
+	public abstract String toString();
 	
 	public static void main(String[] args) {
 		Apples corn = new Apples();
@@ -117,13 +100,16 @@ abstract class Item {
 		System.out.println("Compare Weed and Weed 1 " + w.equals(w1));
 		System.out.println("Corn name: " + corn.getName());
 		System.out.println("Corn age: " + corn.getAge());
-		System.out.println("Corn represent: " + corn.getRepresent());
-		corn.setAge(3);
+		System.out.println("Corn represent: " + corn.toString());
+		corn.setAge(2);
+		System.out.println("Corn age: " + corn.getAge());
+		System.out.println("Corn represent: " + corn.toString());
+		corn.tick();
 		System.out.println("Corn age: " + corn.getAge());
 		System.out.println("Corn Maturation age: " + corn.getMaturationAge());
-		System.out.println("Corn represent: " + corn.getRepresent());
+		System.out.println("Corn represent: " + corn.toString());
 		System.out.println("Corn gen count: " + corn.getGenerationCount());
-		System.out.println("Weed represent: " + w.getRepresent());
+		System.out.println("Weed represent: " + w.toString());
 		System.out.println("Weed m_age: " + w.getMaturationAge());
 	}
 	

@@ -9,8 +9,14 @@ public class Grain extends Food {
 
 	}
 	
-	public String getRepresent() {
-		return this.getRepresent("g");
+	@Override
+	public String toString() {
+		if (this.age < this.maturationAge) {
+			this.represent = "g";
+		} else {
+			this.represent = "G";
+		}
+		return this.represent;
 	}
 	
 	public int getGenerationCount() {
