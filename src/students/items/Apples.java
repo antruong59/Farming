@@ -1,6 +1,7 @@
 package students.items;
 
 public class Apples extends Food {
+	public static int counter = 0;
 	
 	public Apples() {
 		super(3, 5, 3, 2);
@@ -22,8 +23,5 @@ public class Apples extends Food {
 	public static int getGenerationCount() {
 		return counter;
 	}
-	
-	public static int counter = 0;
-
 	
 }

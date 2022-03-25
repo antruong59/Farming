@@ -74,7 +74,7 @@ public abstract class Item {
 		
 		Item compareItem = (Item) object; 
 		
-		System.out.println("Inside equals!");
+//		System.out.println("Inside equals!");
 		return this.getAge() == compareItem.getAge() 
 				&& this.getDeathAge() == compareItem.getDeathAge() 
 				&& this.getMaturationAge() == compareItem.getMaturationAge() 
@@ -108,7 +108,7 @@ public abstract class Item {
 		System.out.println("Corn age: " + corn.getAge());
 		System.out.println("Corn Maturation age: " + corn.getMaturationAge());
 		System.out.println("Corn represent: " + corn.toString());
-		System.out.println("Corn gen count: " + corn.getGenerationCount());
+		System.out.println("Corn gen count: " + Apples.getGenerationCount());
 		System.out.println("Weed represent: " + w.toString());
 		System.out.println("Weed m_age: " + w.getMaturationAge());
 	}
