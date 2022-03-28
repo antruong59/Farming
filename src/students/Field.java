@@ -2,6 +2,7 @@ package students;
 
 import students.items.Apples;
 import students.items.Food;
+import students.items.Grain;
 import students.items.Item;
 import students.items.Soil;
 import students.items.UntilledSoil;
@@ -26,31 +27,12 @@ public class Field {
 		for (int row = 0; row < this.height; row++) {
 	        for (int col = 0; col < this.width; col++) {
 	        	Soil soil = new Soil();
-	        	field[row][col] = soil;
+	        	this.field[row][col] = soil;
 	        }
 		}
-//		System.out.println("Soil numb: " + Soil.getGenerationCount());
-
-	}
-	
-	public void getField() {
-		for (int col = 0; col <= this.width; col++) {
-			if (col == 0) {
-				System.out.print("     ");
-			} else {
-			System.out.print(col + "    ");
-			}	
-		}
-		System.out.println("\n");
 		
-		for (int row = 0; row < this.height; row++) {
-			System.out.print((row + 1) + "    ");
-	        for (int col = 0; col < this.width; col++) {
-	        	
-	        	System.out.print(this.field[row][col].toString() + "    ");
-	        }
-	        System.out.println("\n");
-		}
+		this.field.toString();
+
 	}
 	
 	public void tick() {
@@ -75,70 +57,139 @@ public class Field {
 		}
 	}
 	
-//	public String toString() {
-//		
-//	}
-//	
+	public String toString() {
+		String getField = new String();
+		for (int col = 0; col <= this.width; col++) {
+			if (col == 0) {
+				getField += "     ";
+			} else {
+				getField += col + "    ";
+			}	
+		}
+		getField += "\n\n";
+		
+		for (int row = 0; row < this.height; row++) {
+			getField += (row + 1) + "    ";
+	        for (int col = 0; col < this.width; col++) {
+	        	
+	        	getField += this.field[row][col].toString() + "    ";
+	        }
+	        getField += "\n\n";
+		}
+		return getField;
+	}
+	
 	public void till(int x, int y) {
 		Soil soil = new Soil();
 		this.field[y][x] = soil;
 	}
 	
-	public String get(int x, int y) {
-		return this.field[y][x].toString();
+	public Item get(int x, int y) {
+		return this.field[y][x];
 	}
 	
-	public void plant(int x, int y, Food item) {
-		if (this.field[y - 1][x - 1] instanceof Soil) {
-			this.field[y - 1][x - 1] = item;
-		} else {
-			System.out.printf("You can only plant %s in soil", item.toString());
+	public void plant(int x, int y, Item item) {
+		try {
+			if (this.field[y][x] instanceof Soil) {
+				this.field[y][x] = item;
+			} else {
+				System.out.printf("You can only plant %s in Soil\n", item.getName());
+			}
+		} catch (Exception e) {
+			System.out.printf("There is no location (%s, %s) to plant! Please choose another location\n", x, y);
 		}
 		
+		
 	}
 	
-//	public Hashtable getValue() {
-//		Hashtable itemValue = new Hashtable();
-//		
-//		for (int row = 0; row < this.height; row++) {
-//	        for (int col = 0; col < this.width; col++) {
-//	        	boolean isKeyPresent = ((Hashtable) itemValue).containsKey(this.field[row][col].toString());
-//	        	if (isKeyPresent) {
-//	        		itemValue.put(this.field[row][col].toString(), 0);
-//	        	} else {
-//	        		itemValue.put(this.field[row][col].toString(), 
-//			        ((Hashtable) itemValue).get(this.field[row][col].toString()) + this.field[row][col].getValue());
-//	        	}
-//	        }
-//		}
-//		
-//		return itemValue;
-//		
-//	}
-	
-	public void getSummary() {
+	public int getValue() {
+		int totalValue = 0;
 		
+		for (int row = 0; row < this.height; row++) {
+	        for (int col = 0; col < this.width; col++) {
+	        	if (this.field[row][col].getValue() != 0) {
+	        		totalValue += this.field[row][col].getValue();
+	        	}
+	     
+	        }
+		}
+		
+		return totalValue;
+		
+	}
+	
+	public String getSummary() {
+		int counterApples = 0;
+		int counterGrain = 0;
+		int counterSoil = 0;
+		int counterUntiled = 0;	
+		int counterWeed = 0;
+		
+		for (int row = 0; row < this.height; row++) {
+	        for (int col = 0; col < this.width; col++) {
+	        	if (this.field[row][col].toString().toUpperCase().equals("A")) {
+	        		counterApples ++;
+	        	} else if (this.field[row][col].toString().toUpperCase().equals("G")) {
+	        		counterGrain ++;
+	        	} else if (this.field[row][col].toString().equals(".")) {
+	        		counterSoil ++;
+	        	} else if (this.field[row][col].toString().equals("/")) {
+	        		counterUntiled ++;
+	        	} else if (this.field[row][col].toString().equals("#")) {
+	        		counterWeed ++;
+	        	}
+	        	
+	        }
+		}
+		
+		String summary = new String();
+ 
+		summary += String.format("%-15.50s%-15.50s%n", "Apples: ", counterApples);
+		summary += String.format("%-15.50s%-15.50s%n", "Grain: ", counterGrain);
+		summary += String.format("%-15.50s%-15.50s%n", "Soil: ", counterSoil);
+		summary += String.format("%-15.50s%-15.50s%n", "Untilled: ", counterUntiled);
+		summary += String.format("%-15.50s%-15.50s%n", "Weed: ", counterWeed);
+		summary += String.format("%-15.50s%-15.50s%n", "For a total of ", "$" + this.getValue());
+		summary += String.format("%-15.50s  %-15.50s%n", "Total apples created:", Apples.getGenerationCount());
+		summary += String.format("%-15.50s  %-15.50s%n", "Total grain created:", Grain.getGenerationCount());
+		
+		return summary;
 	}
 	
 	public static void main(String[] args) {
-		Field field = new Field(5, 10);
+		Field field = new Field(5, 5);
+		System.out.println("Without apples \n" + field);
 		System.out.println("Field height " + field.height);
 		System.out.println("Field height " + field.width);
-		field.getField();
+//		field.getField();
 		field.tick();
+//		field.getField();
 		Apples a = new Apples();
+//		System.out.println(Apples.getGenerationCount());
 		field.plant(1, 3, a);
-		field.getField();
+		System.out.println("With apples \n" + field + "end");
+		System.out.println(field.getSummary());
+//		field.getField();
 		field.tick();
+//		field.getField();
 		field.tick();
+//		field.getField();
 		field.tick();
-//		field.tick();
-//		field.tick();
-//		field.tick();
-		field.getField();
-//		System.out.println(field.getValue().toString());
-		
-		
+		System.out.println("With apples \n" + field + "end");
+//		field.getField();
+		field.tick();
+//		field.getField();
+		field.tick();
+		System.out.println("With apples \n" + field + "end");
+		System.out.println(field.getSummary());
+//		field.getField();
+		Apples a1 = new Apples();
+		field.plant(0, 0, a1);
+		field.tick();
+		System.out.println("With apples \n" + field + "end");
+//		field.getField();
+//		System.out.println(field.getValue());
+		System.out.println(field.getSummary());
 		
 	}
 }

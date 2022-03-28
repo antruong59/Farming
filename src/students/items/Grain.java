@@ -20,7 +20,7 @@ public class Grain extends Food {
 		return this.represent;
 	}
 	
-	public int getGenerationCount() {
+	public static int getGenerationCount() {
 		return counter;
 	}
 

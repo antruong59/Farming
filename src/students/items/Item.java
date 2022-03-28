@@ -41,7 +41,7 @@ public abstract class Item {
 	}
 
 	public int getValue() {
-		if (this.age > this.maturationAge) {
+		if (this.age >= this.maturationAge || this.maturationAge == Double.POSITIVE_INFINITY) {
 			return (int) this.monetaryValue;
 		}
 		return 0;
