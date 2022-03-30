@@ -15,44 +15,13 @@ public abstract class Item {
 		this.monetaryValue = monetaryValue;
 		
 	}
-
-	public String getName() {
-		return this.name;
-	}
 	
-	protected void setName(String name) {
-		this.name = name;
-	}
-
-	public double getAge() {
-		return this.age;
-	}
-
-	public void setAge(double age) {
-		this.age = age;
-	}
-
-	public double getMaturationAge() {
-		return this.maturationAge;
-	}
-
-	public double getDeathAge() {
-		return this.deathAge;
-	}
-
-	public int getValue() {
-		if (this.age >= this.maturationAge || this.maturationAge == Double.POSITIVE_INFINITY) {
-			return (int) this.monetaryValue;
-		}
-		return 0;
-	}
-
-	public double getCost() {
-		return this.cost;
-	}
-
 	public void tick() {
 		this.age ++;
+	}
+	
+	public void setAge(double age) {
+		this.age = age;
 	}
 	
 	public boolean died() {
@@ -60,6 +29,13 @@ public abstract class Item {
 			return true;
 		}
 		return false;
+	}
+	
+	public int getValue() {
+		if (this.age >= this.maturationAge || this.maturationAge == Double.POSITIVE_INFINITY) {
+			return (int) this.monetaryValue;
+		}
+		return 0;
 	}
 	
 	public boolean equals(Object object) {
@@ -83,6 +59,38 @@ public abstract class Item {
 	
 	
 	public abstract String toString();
+
+	public String getName() {
+		return this.name;
+	}
+	
+	protected void setName(String Name) {
+		this.name = Name;
+	}
+
+	public double getAge() {
+		return this.age;
+	}	
+
+	public double getMaturationAge() {
+		return this.maturationAge;
+	}
+
+	public double getDeathAge() {
+		return this.deathAge;
+	}
+
+	
+
+	public int getCost() {
+		return (int) this.cost;
+	}
+
+	
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
 		Apples corn = new Apples();

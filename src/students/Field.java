@@ -92,14 +92,14 @@ public class Field {
 		try {
 			if (this.field[y][x] instanceof Soil) {
 				this.field[y][x] = item;
+				
 			} else {
 				System.out.printf("You can only plant %s in Soil\n", item.getName());
 			}
 		} catch (Exception e) {
 			System.out.printf("There is no location (%s, %s) to plant! Please choose another location\n", x, y);
 		}
-		
-		
+			
 	}
 	
 	public int getValue() {
@@ -158,6 +158,7 @@ public class Field {
 	
 	public static void main(String[] args) {
 		Field field = new Field(5, 5);
+		System.out.println(field.getSummary());
 		System.out.println("Without apples \n" + field);
 		System.out.println("Field height " + field.height);
 		System.out.println("Field height " + field.width);
