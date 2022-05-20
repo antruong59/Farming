@@ -1,12 +1,14 @@
 package students.items;
 
 public abstract class Item {
+	
+	/* Item class is an abstract base class that declares all the attributes of every item and is inherited by classes: Food, Soil, UntilledSoil and Fertilizer*/
 	private String name;
 	protected double age = 0;
 	protected double maturationAge;
 	protected double deathAge;
 	protected double monetaryValue;
-	protected double cost;
+	protected static double cost;
 	protected String represent;
 	
 	public Item(double maturationAge, double deathAge, double monetaryValue) {		
@@ -16,14 +18,17 @@ public abstract class Item {
 		
 	}
 	
+	// Increase age of item by 1
 	public void tick() {
 		this.age ++;
 	}
 	
-	public void setAge(double age) {
+	// Set age of item
+	public void setAge(int age) {
 		this.age = age;
 	}
 	
+	// Check if item died
 	public boolean died() {
 		if (this.age > this.deathAge) {
 			return true;
@@ -31,18 +36,27 @@ public abstract class Item {
 		return false;
 	}
 	
+	// Get the monetary value of item
 	public int getValue() {
+		
+		// Return monetary value if the item age over maturation age
 		if (this.age >= this.maturationAge || this.maturationAge == Double.POSITIVE_INFINITY) {
 			return (int) this.monetaryValue;
 		}
+		
+		// Else return 0
 		return 0;
 	}
 	
+	// Compare between 2 objects, return true if they shared the same age, death age, maturation age and value
 	public boolean equals(Object object) {
+		
+		// If they are the same object
 		if (object == this) {
 			return true;
 		}
 		
+		// If the object is not an item
 		if (!(object instanceof Item)) {
 			System.out.println("not an instance of Item");
 			return false;
@@ -50,47 +64,50 @@ public abstract class Item {
 		
 		Item compareItem = (Item) object; 
 		
-//		System.out.println("Inside equals!");
+
 		return this.getAge() == compareItem.getAge() 
 				&& this.getDeathAge() == compareItem.getDeathAge() 
 				&& this.getMaturationAge() == compareItem.getMaturationAge() 
 				&& this.getValue() == compareItem.getValue();
 	}
 	
-	
+	// Abstract method toString()
 	public abstract String toString();
 
+	// Get name of item
 	public String getName() {
 		return this.name;
 	}
 	
+	// Set name of item
 	protected void setName(String Name) {
 		this.name = Name;
 	}
 
+	// Get age of item
 	public double getAge() {
 		return this.age;
 	}	
 
+	// Get maturation age
 	public double getMaturationAge() {
 		return this.maturationAge;
 	}
 
+	// Get death age
 	public double getDeathAge() {
 		return this.deathAge;
 	}
 
-	
-
-	public int getCost() {
-		return (int) this.cost;
+	// Set monetary value
+	public void setValue(int value) {
+		this.monetaryValue = value;
 	}
 
-	
-	
-	
-	
-	
+	// Get cost of item
+	public static int getCost() {
+		return (int) cost;
+	}
 	
 	public static void main(String[] args) {
 		Apples corn = new Apples();
@@ -110,6 +127,9 @@ public abstract class Item {
 		System.out.println("Corn age: " + corn.getAge());
 		System.out.println("Corn represent: " + corn.toString());
 		corn.setAge(2);
+		System.out.println("Val 1 "+corn.getValue());
+		corn.setValue(5);
+		System.out.println("Val 2 "+corn.getValue());
 		System.out.println("Corn age: " + corn.getAge());
 		System.out.println("Corn represent: " + corn.toString());
 		corn.tick();

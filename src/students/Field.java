@@ -14,10 +14,24 @@ import java.util.Hashtable;
 import java.util.Random;
 
 public class Field {
+	
+	/* Field class is a class that declare, initialize field in farm and farming functionalities*/
+	
+	// Field attributes
+	
+	// Field height & width
 	protected int height;
 	protected int width;
+	
+	// Declare field as a 2D Item array
 	protected Item[][] field;
 	
+	// Keep track of tilled position
+	// Set default to (-1, -1)
+	private static  int tilledX = -1;
+	private static int tilledY = -1;
+	
+	// By default, field is full of item Soil
 	public Field(int height, int width)
 	{
 		this.height = height;
@@ -35,20 +49,43 @@ public class Field {
 
 	}
 	
+	// Marked tilled item by storing its location temporary in tilledX and tilledYS
+	public void markTilledItem(int x, int y) {
+		tilledX = y;
+		tilledY = x;
+	}
+	
+	// Call whenever an action activated
+	// Increase age of items in field by 1
+	// Randomly turn Soil into Weed by 20% chance
+	// Check if plant died, turn it into UntilledSoilS
 	public void tick() {
 		for (int row = 0; row < this.height; row++) {
 	        for (int col = 0; col < this.width; col++) {
+	        	
+	        	// Skip if it has been tilled earlier
+	        	if (row == tilledX && col == tilledY) {
+	        		tilledX = -1;
+	        		tilledY = -1;
+	        		continue;
+	        	}
+	        	
+	        	// Increase age of items in field by 1
 	        	this.field[row][col].tick();
+	        	
+	        	// Randomly turn Soil into Weed by 20% chance	        	
 	        	int randNum = new Random().nextInt(5);
-	        	//System.out.println("Rand Num: " + randNum);
 	        	
 	        	boolean turnToWeed = randNum == 0;
 	        	
 	        	if (this.field[row][col] instanceof Soil && turnToWeed) {
 	        		Weed weed = new Weed();
 	        		this.field[row][col] = weed;	
+	        	} else if (this.field[row][col] instanceof Soil && !turnToWeed) {
+	        		continue;
 	        	}
 	        	
+	        	// Check if plant died, turn it into UntilledSoi
 	        	if (this.field[row][col].died()) {
 	        		UntilledSoil untilledsoil = new UntilledSoil();
 	        		this.field[row][col] = untilledsoil;
@@ -57,8 +94,12 @@ public class Field {
 		}
 	}
 	
+	// Get field
 	public String toString() {
 		String getField = new String();
+		
+		getField = "=".repeat(this.width * 5) + "==\n";
+		
 		for (int col = 0; col <= this.width; col++) {
 			if (col == 0) {
 				getField += "     ";
@@ -76,18 +117,23 @@ public class Field {
 	        }
 	        getField += "\n\n";
 		}
+		getField += "=".repeat(this.width * 5) + "==\n";
 		return getField;
 	}
 	
+	// Till the item and swap it into Soil
 	public void till(int x, int y) {
 		Soil soil = new Soil();
 		this.field[y][x] = soil;
 	}
 	
+	// Get Item by location in field
 	public Item get(int x, int y) {
 		return this.field[y][x];
 	}
 	
+	// Plant item into given location
+	// Validate user input by try catch
 	public void plant(int x, int y, Item item) {
 		try {
 			if (this.field[y][x] instanceof Soil) {
@@ -102,6 +148,8 @@ public class Field {
 			
 	}
 	
+	// Get total value of the whole field
+	// Based on every item values 
 	public int getValue() {
 		int totalValue = 0;
 		
@@ -118,6 +166,7 @@ public class Field {
 		
 	}
 	
+	// Get summary of the field in formatted display
 	public String getSummary() {
 		int counterApples = 0;
 		int counterGrain = 0;
@@ -154,6 +203,12 @@ public class Field {
 		summary += String.format("%-15.50s  %-15.50s%n", "Total grain created:", Grain.getGenerationCount());
 		
 		return summary;
+	}
+	
+	// Harvest plant and turn it into UntilledSoil
+	public void harvest(int x, int y) {
+		UntilledSoil untilledsoil = new UntilledSoil();
+		this.field[y][x] = untilledsoil;
 	}
 	
 	public static void main(String[] args) {

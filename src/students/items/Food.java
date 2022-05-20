@@ -2,9 +2,10 @@ package students.items;
 
 public abstract class Food extends Item {
 
-	public Food(double maturationAge, double deathAge, double monetaryValue, double Cost) {
+	/* Abstract class Food that pass maturation age, death age and monetary value inherited from Item*/
+	public Food(double maturationAge, double deathAge, double monetaryValue) {
 		super(maturationAge, deathAge, monetaryValue);
-		this.cost = Cost;
+		cost = 0;
 	}
 
 }
